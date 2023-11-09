@@ -38,6 +38,10 @@ def api_live():
             except Exception as erro:
                 logging.critical(erro)
 
+@app.route("/arquivo/<file>", methods=['GET'])
+def arquivo(file):
+    return send_file(f'{OUTPUT_FOLDER}/{file}', as_attachment=True)
+
 if __name__ == '__main__':
     app.run(port=8080, debug=True)
 
