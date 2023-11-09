@@ -30,7 +30,7 @@ def api_live():
         if file.filename == '':
             return redirect(request.url)
         if file and allowed_file(file.filename):
-            filename = f"{randint(0, 100)}_{datetime.datetime.now().strftime('%Y-%m-%d-%H-%M-%S')}_{secure_filename(file.filename)}"
+            filename = f"{datetime.datetime.now().strftime('%Y-%m-%d-%H-%M-%S')}_{randint(0, 100)}_{secure_filename(file.filename)}"
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             try:
                 ocrmypdf.ocr(f'{UPLOAD_FOLDER}/{filename}', f'{OUTPUT_FOLDER}/{filename}', deskew=True, language='por')
