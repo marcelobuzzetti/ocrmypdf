@@ -49,6 +49,8 @@ def api_live():
                     return send_file(f'{OUTPUT_FOLDER}/{filename}', as_attachment=True)
                 except Exception as erro:
                     logging.critical(erro)
+                    logging.info(f"Removendo o arquivo {UPLOAD_FOLDER}/{filename}")
+                    os.remove(f'{UPLOAD_FOLDER}/{filename}')
                     return f"Não foi possível converter o pdf devido ao seguinte erro:\n {erro}"
     except Exception as erro:
         return f"Não foi possível converter o pdf devido ao seguinte erro:\n {erro}"
