@@ -11,6 +11,7 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.3.2/socket.io.js"></script>
     </head>
     <body>
         <!--[if lt IE 7]>
@@ -23,5 +24,29 @@
         </form>
         
         <script src="" async defer></script>
+
+        <button id="startButton">Start OCR</button>
+        <div id="status"></div>
+    
+        <script>
+            var socket = io.connect('http://' + document.domain + ':' + location.port);
+    
+            socket.on('connect', function() {
+                console.log('Connected');
+            });
+    
+            socket.on('ocr_completed', function(data) {
+                document.getElementById('status').innerHTML = data.message;
+            });
+    
+            socket.on('output_file', function(data) {
+                var fileUrl = data.output_file; // You might need to serve the file statically or through Flask
+                // Here you can provide the file to the user for download or further action
+            });
+    
+            /*document.getElementById('startButton').addEventListener('click', function() {
+                socket.emit('start_ocr', {});
+            });*/
+        </script>
     </body>
 </html>
