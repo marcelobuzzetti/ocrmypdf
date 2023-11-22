@@ -13,20 +13,102 @@
         <link rel="stylesheet" href="">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+        <style>
+            .loader {
+                display: none;
+                border: 8px solid #f3f3f3;
+                border-top: 8px solid #3498db;
+                border-radius: 50%;
+                width: 50px;
+                height: 50px;
+                animation: spin 1s linear infinite;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                margin-top: -25px;
+                margin-left: -25px;
+            }
+
+            @keyframes spin {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+            }
+
+            #arquivo, #erro, #warning {
+                display: none;
+            }
+        </style>
     </head>
     <body>
         <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
+        <div class="loader" id="loader"></div>
+
         <div class="container text-center mt-3">
             <h1>Torne seu PDF 'PESQUISÁVEL'</h1>
-            <form action="" method="post" enctype="multipart/form-data">
+            <form action="" method="post" id="form" onsubmit="return false">
                 <input type="file" name="pdf" id="pdf" accept="application/pdf">
-                <input type="submit" value="Enviar">
+                <input type="submit" value="Enviar" id="button-send">
             </form>
+            <h2 id="warning" class="mt-3">
+                Aguarde enquanto convertemos seu PDF...
+            </h2>
+            <div id="arquivo" class="mt-3">
+                <p>Segue o arquivo</p>
+                <div id="link"></div>
+            </div>
+            <div id="erro" class="mt-3">
+            </div>
         </div>
     
         <script>
+            $("#button-send").click(sendFormData);
+			
+			function sendFormData(){
+                $("#loader").show();
+                $("#form").toggle();
+                $("#warning").hide();
+                $("#arquivo").hide();
+                $("#erro").hide();
+                $("#link").empty()
+                var formData = new FormData($("#form").get(0));
+				$("#warning").show()
+				var ajaxUrl = "/";
+				
+				$.ajax({
+					url : ajaxUrl,
+					type : "POST",
+					data : formData,
+					// both 'contentType' and 'processData' parameters are
+					// required so that all data are correctly transferred
+					contentType : false,
+					processData : false
+				}).done(function(response){
+					// In this callback you get the AJAX response to check
+					// if everything is right...
+                    console.log(response)
+                    $("#form")[0].reset();
+                    if (response['link']){
+                        $("#link").append(`<a href='${response['link']}'>PDF</a>`)
+                        $("#arquivo").toggle();
+                    }
+                    if (response['erro']){
+                        $("#erro").append(`<span>${response['erro']}<span>`)
+                        $("#erro").toggle();
+                    }
+				}).fail(function(response){
+                    console.log(response)
+                    $("#erro").append(`<span>${response['erro']}<span>`)
+                    $("#erro").toggle();
+					// Here you should treat the http errors (e.g., 403, 404)
+				}).always(function(){
+                    $("#loader").hide();
+                    $("#form").toggle();
+                    $("#warning").toggle();
+				});
+			}
         </script>
     </body>
 </html>
