@@ -19,6 +19,7 @@ RUN ls -lha
 RUN pip install -r requirements.txt
 
 #Install OCRMYPDF
+RUN apt update && apt upgrade -y 
 RUN apt install ocrmypdf tesseract-ocr-por automake libtool libleptonica-dev git -y
 RUN git clone https://github.com/agl/jbig2enc \
 cd jbig2enc \
