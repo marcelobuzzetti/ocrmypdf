@@ -65,6 +65,14 @@ a:link {
     color:#FFF
 }
 
+.link:visited, .link:link {
+    color:#3498db
+}
+
+.link:hover {
+    color: blue
+}
+
 .image-header {
     height: 30px;
     width: 30px;

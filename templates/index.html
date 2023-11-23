@@ -29,7 +29,8 @@
                 <input type="file" name="pdf" id="pdf" accept="application/pdf">
             </form>
             <h2 id="warning" class="mt-3">
-                Aguarde enquanto convertemos seu PDF...
+                <p>Aguarde enquanto convertemos seu PDF...</p>
+                <p>Não feche ou recarregue a página</p>
             </h2>
             <div id="arquivo" class="mt-3 text-center">
                 <p>Segue o arquivo</p>
@@ -71,7 +72,7 @@
                     $("#form")[0].reset();
                     if (response['link']){
                         $("#link").append(`<a class='btn' href='${response['link']}'>DOWNLOAD</a>`)
-                        $("#msg").append(`<p>Salve este endereço para fazer o download do arquivo quando quiser http://${document.domain}:${location.port}${response['link']}<p>`)
+                        $("#msg").append(`<p>Salve este endereço para fazer o download do arquivo quando quiser <a class='link' href="http://${document.domain}:${location.port}${response['link']}">http://${document.domain}:${location.port}${response['link']}</a><p>`)
                         $("#arquivo").toggle();
                     }
                     if (response['erro']){

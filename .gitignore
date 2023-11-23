@@ -1,3 +1,4 @@
 output/*.pdf
 uploaded/*.pdf
 Pipfile
+__pycache__/
