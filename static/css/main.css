@@ -6,10 +6,6 @@ body {
     font-family: 'Roboto';
 }
 
-input {
-    font-size: large;
-}
-
 @font-face {
     font-family: Roboto;
     src: url(../roboto/Roboto-Regular.ttf);
@@ -51,6 +47,10 @@ input {
     margin: 0 10px;
     display: flex;
     flex-direction: column;
+    flex-basis: auto;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
 }
 
 a:visited {
@@ -63,4 +63,13 @@ a:link {
 
 a:hover {
     color:blue
+}
+
+.image-header {
+    height: 30px;
+    width: 30px;
+}
+
+input {
+    font-size: large;
 }
