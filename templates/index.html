@@ -25,8 +25,8 @@
         <div class="container text-center mt-3">
             <h1>Torne seu PDF 'PESQUISÁVEL' <img class="image-header" src="{{ url_for('static', filename='img/icon.png') }}" alt=""></h1>
             <form action="" method="post" id="form" onsubmit="return false">
+                <label for="pdf" class="btn">Enviar arquivo</label>
                 <input type="file" name="pdf" id="pdf" accept="application/pdf">
-                <input type="submit" value="Enviar" id="button-send">
             </form>
             <h2 id="warning" class="mt-3">
                 Aguarde enquanto convertemos seu PDF...
@@ -41,7 +41,7 @@
         </div>
     
         <script>
-            $("#button-send").click(sendFormData);
+            $("#pdf").change(sendFormData);
 			
 			function sendFormData(){
                 $("#loader").show();
@@ -68,7 +68,7 @@
                     console.log(response)
                     $("#form")[0].reset();
                     if (response['link']){
-                        $("#link").append(`<a href='${response['link']}'>PDF</a>`)
+                        $("#link").append(`<a class='btn' href='${response['link']}'>DOWNLOAD</a>`)
                         $("#arquivo").toggle();
                     }
                     if (response['erro']){

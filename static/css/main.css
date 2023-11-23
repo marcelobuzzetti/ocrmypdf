@@ -53,16 +53,16 @@ body {
     justify-content: center;
 }
 
+a {
+    text-decoration: none;
+}
+
 a:visited {
-    color:#3498db
+    color:#FFF
 }
 
 a:link {
-    color:#3498db
-}
-
-a:hover {
-    color:blue
+    color:#FFF
 }
 
 .image-header {
@@ -72,4 +72,25 @@ a:hover {
 
 input {
     font-size: large;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.btn {
+    padding: 20px 10px;
+    width: 200px;
+    background-color: #3498db;
+    color: #FFF;
+    border-radius: 30px;
+    text-transform: uppercase;
+    text-align: center;
+    display: block;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: blue;
 }
