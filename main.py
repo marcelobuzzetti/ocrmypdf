@@ -35,7 +35,7 @@ def api_live():
                 filename = f"{datetime.datetime.now().strftime('%Y-%m-%d-%H-%M-%S')}_{randint(0, 100)}_{secure_filename(file.filename)}"
                 file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
                 logging.info(f"OCR o arquivo {UPLOAD_FOLDER}/{filename}")
-                subprocess.run(['/usr/bin/ocrmypdf', '--skip-text', f'{UPLOAD_FOLDER}/{filename}', f'{OUTPUT_FOLDER}/{filename}'], check=True)
+                subprocess.run(['/usr/bin/ocrmypdf', '--skip-text', '--output-type', 'pdf', '-l', 'por', f'{UPLOAD_FOLDER}/{filename}', f'{OUTPUT_FOLDER}/{filename}'], check=True)
                 if os.path.exists(f'{OUTPUT_FOLDER}/{filename}'):
                     '''return render_template(
                         'output.html',
