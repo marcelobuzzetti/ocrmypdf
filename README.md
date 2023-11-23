@@ -41,3 +41,8 @@ Execute o container no modo interativo
 ```
 docker run -d -p 8080:8080 ocrmypdf
 ```
+
+# Referencias Tecnicas
+* https://ocrmypdf.readthedocs.io/en/latest/installation.html
+* https://ocrmypdf.readthedocs.io/en/latest/jbig2.html#jbig2
+* https://gunicorn.org/
