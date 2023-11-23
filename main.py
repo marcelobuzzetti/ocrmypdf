@@ -5,6 +5,8 @@ from flask import Flask, request, render_template, redirect, make_response, send
 from werkzeug.utils import secure_filename
 import logging
 import datetime
+import threading
+import multiprocessing
 
 UPLOAD_FOLDER = 'uploaded'
 OUTPUT_FOLDER = 'output'
@@ -18,6 +20,9 @@ app.config['SECRET_KEY'] = 'secret'
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+def convert_ocr(input,output):
+	subprocess.run(['/usr/bin/ocrmypdf', '--skip-text', '--output-type', 'pdf', '-l', 'por', input, output], check=True)
 
 @app.route("/", methods=['GET', 'POST'])
 def api_live():
@@ -35,7 +40,13 @@ def api_live():
                 filename = f"{datetime.datetime.now().strftime('%Y-%m-%d-%H-%M-%S')}_{randint(0, 100)}_{secure_filename(file.filename)}"
                 file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
                 logging.info(f"OCR o arquivo {UPLOAD_FOLDER}/{filename}")
-                subprocess.run(['/usr/bin/ocrmypdf', '--skip-text', '--output-type', 'pdf', '-l', 'por', f'{UPLOAD_FOLDER}/{filename}', f'{OUTPUT_FOLDER}/{filename}'], check=True)
+                #subprocess.run(['/usr/bin/ocrmypdf', '--skip-text', '--output-type', 'pdf', '-l', 'por', f'{UPLOAD_FOLDER}/{filename}', f'{OUTPUT_FOLDER}/{filename}'], check=True)
+                # Thread
+                x = threading.Thread(convert_ocr(f'{UPLOAD_FOLDER}/{filename}', f'{OUTPUT_FOLDER}/{filename}'))
+                # Multiprocess
+                #x = multiprocessing.Process(convert_ocr(f'{UPLOAD_FOLDER}/{filename}', f'{OUTPUT_FOLDER}/{filename}'))
+                x.start()
+                x.join()
                 if os.path.exists(f'{OUTPUT_FOLDER}/{filename}'):
                     '''return render_template(
                         'output.html',
