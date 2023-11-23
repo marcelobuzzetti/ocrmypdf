@@ -21,11 +21,11 @@ RUN pip install -r requirements.txt
 #Install OCRMYPDF
 RUN apt update && apt upgrade -y 
 RUN apt install ocrmypdf tesseract-ocr-por automake libtool libleptonica-dev git -y
-RUN git clone https://github.com/agl/jbig2enc \
-cd jbig2enc \
-./autogen.sh \
-./configure && make \
-sudo make install
+RUN git clone https://github.com/agl/jbig2enc
+RUN cd jbig2enc
+RUN ./autogen.sh 
+RUN ./configure && make
+RUN sudo make install
 
 # Expose the port your Flask app will run on
 EXPOSE 8080
