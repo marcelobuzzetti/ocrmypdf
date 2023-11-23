@@ -23,6 +23,7 @@ RUN apt update && apt upgrade -y
 RUN apt install ocrmypdf tesseract-ocr-por automake libtool libleptonica-dev git -y
 RUN git clone https://github.com/agl/jbig2enc
 RUN cd jbig2enc
+RUN ls -lha
 RUN ./autogen.sh 
 RUN ./configure && make
 RUN sudo make install

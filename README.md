@@ -29,7 +29,7 @@ cd jbig2enc
 Execute `pip install -r requirements.txt`
 * Execute local:
 ```
-env FLASK_APP=main.py gunicorn -w 4 --bind 0.0.0.0:8080 main:app
+env FLASK_APP=main.py gunicorn -w 4 --bind 0.0.0.0:8080 --timeout 600 main:app
 ```
 
 ## Rodando com container ##
