@@ -41,7 +41,7 @@ def api_live():
                         'output.html',
                         link=f'http://127.0.0.1:8080/arquivo/{filename}'
                     )'''
-                    return jsonify({'link': f'http://127.0.0.1:8080/arquivo/{filename}'})
+                    return jsonify({'link': f'/arquivo/{filename}'})
                 else:
                     return jsonify({'erro':"Não foi possível converter o pdf"})
             else:

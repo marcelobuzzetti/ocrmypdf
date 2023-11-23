@@ -31,10 +31,11 @@
             <h2 id="warning" class="mt-3">
                 Aguarde enquanto convertemos seu PDF...
             </h2>
-            <div id="arquivo" class="mt-3">
+            <div id="arquivo" class="mt-3 text-center">
                 <p>Segue o arquivo</p>
                 <div id="link"></div>
             </div>
+            <div id="msg"></div>
             <div class="mt-3">
                 <div id="erro"></div>
             </div>
@@ -49,6 +50,7 @@
                 $("#warning").hide();
                 $("#arquivo").hide();
                 $("#link").empty()
+                $("#msg").empty()
                 $("#erro").empty().hide()
                 var formData = new FormData($("#form").get(0));
 				$("#warning").show()
@@ -69,6 +71,7 @@
                     $("#form")[0].reset();
                     if (response['link']){
                         $("#link").append(`<a class='btn' href='${response['link']}'>DOWNLOAD</a>`)
+                        $("#msg").append(`<p>Salve este endereço para fazer o download do arquivo quando quiser http://${document.domain}:${location.port}${response['link']}<p>`)
                         $("#arquivo").toggle();
                     }
                     if (response['erro']){
