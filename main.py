@@ -1,12 +1,10 @@
 import os
 from random import randint
-import multiprocessing
 import subprocess
 from flask import Flask, request, render_template, redirect, make_response, send_file, jsonify
 from werkzeug.utils import secure_filename
 import logging
 import datetime
-import time
 
 UPLOAD_FOLDER = 'uploaded'
 OUTPUT_FOLDER = 'output'
