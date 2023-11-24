@@ -83,7 +83,7 @@
 				}).fail(function(response){
                     console.log(response)
                     $("#erro").show();
-                    $("#erro").append(`<span>Os nossos servidores estão sobrecaregados, tente novamente mais tarde...<span>`)
+                    $("#erro").append(`<span>Os nossos servidores estão sobrecarregados, tente novamente mais tarde...<span>`)
 					// Here you should treat the http errors (e.g., 403, 404)
 				}).always(function(){
                     $("#loader").hide();

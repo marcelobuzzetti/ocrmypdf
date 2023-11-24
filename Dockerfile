@@ -1,5 +1,5 @@
-# Use an official OCRMYPDF runtime as a parent image
-FROM python:3.10-slim-buster
+# Use an official python runtime as a parent image
+FROM python:3.10-buster
 
 # Select SHELL
 SHELL ["/bin/bash", "-c"] 
@@ -22,14 +22,9 @@ RUN ls -lha
 RUN pip install -r requirements.txt
 
 #Install OCRMYPDF
-RUN apt update && apt upgrade -y 
-RUN apt install ocrmypdf tesseract-ocr-por automake libtool libleptonica-dev git -y
-RUN git clone https://github.com/agl/jbig2enc
-RUN cd jbig2enc
-RUN ls -lha
-RUN ./autogen.sh 
-RUN ./configure && make
-RUN sudo make install
+RUN apt update
+RUN apt install ocrmypdf tesseract-ocr-por -y
+
 
 # Expose the port your Flask app will run on
 EXPOSE 8080
@@ -37,5 +32,5 @@ EXPOSE 8080
 RUN FLASK_APP=main.py
 
 # Command to run the Flask application
-CMD ["gunicorn", "-w", "4", "--bind", "0.0.0.0:8080", "main:app"]
+CMD ["gunicorn", "-w", "4", "--bind", "0.0.0.0:8080", "main:app", "--timeout 600"]
 
