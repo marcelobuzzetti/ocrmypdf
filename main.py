@@ -22,7 +22,7 @@ def allowed_file(filename):
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 def convert_ocr(input,output):
-	subprocess.run(['/usr/bin/ocrmypdf', '--skip-text', '--output-type', 'pdf', '-l', 'por', input, output], check=True)
+	subprocess.run(['/usr/bin/ocrmypdf', '--skip-text', '--output-type', 'pdf', '-l', 'por', '--optimize', '0', input, output], check=True)
 
 @app.route("/", methods=['GET', 'POST'])
 def api_live():
